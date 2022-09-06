@@ -6,11 +6,28 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
+    
+    @StateObject var mediaQuery =  MediaQuery()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            VStack {
+                TextField("Search", text: $mediaQuery.iTunesQuery)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                List(mediaQuery.searchResults) { item in
+                    VStack(alignment: .leading) {
+                        Text(item.trackName).font(.headline)
+                        Text(item.artistName).font(.subheadline)
+                    }
+                    
+                }
+            }
+            .navigationBarTitle("Search Music")
+        }
     }
 }
 
